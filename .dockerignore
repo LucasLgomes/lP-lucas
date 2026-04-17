@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env
+.env.local
+README.md
+Dockerfile
+docker-compose.yml
+.dockerignore
+.vscode
+.idea
+*.log
+dev-skills
+Curriculo_Lucas_Vinicius*.pdf

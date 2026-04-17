@@ -1,0 +1,32 @@
+services:
+  lp:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: lucas-lp
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+    networks:
+      - lp-net
+
+  nginx:
+    image: nginx:alpine
+    container_name: lucas-lp-nginx
+    restart: unless-stopped
+    ports:
+      - "80:80"
+      # - "443:443"  # habilite quando tiver certificados TLS
+    volumes:
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+      # - ./certs:/etc/nginx/certs:ro  # para TLS
+    depends_on:
+      - lp
+    networks:
+      - lp-net
+
+networks:
+  lp-net:
+    driver: bridge

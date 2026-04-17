@@ -1,0 +1,15 @@
+node_modules
+.next
+out
+.env
+.env.local
+.env*.local
+.DS_Store
+*.log
+.vercel
+next-env.d.ts
+
+# Arquivos pessoais que não vão pro repo
+Curriculo_Lucas_Vinicius*.pdf
+LucasSemfundo.png
+dev-skills/
