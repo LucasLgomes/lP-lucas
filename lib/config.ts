@@ -1,5 +1,5 @@
 export const SITE_URL =
-  process.env.NEXT_PUBLIC_SITE_URL ?? "https://l-p-lucas.vercel.app";
+  process.env.NEXT_PUBLIC_SITE_URL ?? "https://l-p-lucaslima012.vercel.app";
 
 export const PROFILE = {
   nome: "Lucas Vinicius",
