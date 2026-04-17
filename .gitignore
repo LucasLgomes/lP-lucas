@@ -9,7 +9,7 @@ out
 .vercel
 next-env.d.ts
 
-# Arquivos pessoais que não vão pro repo
-Curriculo_Lucas_Vinicius*.pdf
+# Arquivos pessoais que não vão pro repo (qualquer PDF na raiz)
+/*.pdf
 LucasSemfundo.png
 dev-skills/
