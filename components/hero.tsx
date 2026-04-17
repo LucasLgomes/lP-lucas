@@ -45,7 +45,7 @@ function useTypewriter(words: string[], speed = 70, pause = 1800) {
   return sub;
 }
 
-const floatingBadges = [
+const desktopBadges = [
   { label: "TypeScript", color: "from-blue-500 to-sky-400", x: "-6%", y: "-50%", delay: 0 },
   { label: "VTEX", color: "from-pink-500 to-rose-500", x: "-52%", y: "-36%", delay: 0.1 },
   { label: "iFood", color: "from-red-500 to-orange-500", x: "44%", y: "-40%", delay: 0.2 },
@@ -56,6 +56,16 @@ const floatingBadges = [
   { label: "Spring Boot", color: "from-green-600 to-emerald-500", x: "30%", y: "42%", delay: 0.7 },
   { label: "Ionic", color: "from-blue-600 to-indigo-500", x: "-32%", y: "42%", delay: 0.8 },
   { label: "n8n", color: "from-fuchsia-500 to-pink-500", x: "0%", y: "50%", delay: 0.9 },
+];
+
+// Versão compacta pro mobile — menos badges, coordenadas contidas
+const mobileBadges = [
+  { label: "VTEX", color: "from-pink-500 to-rose-500", x: "-32%", y: "-38%", delay: 0 },
+  { label: "iFood", color: "from-red-500 to-orange-500", x: "32%", y: "-38%", delay: 0.1 },
+  { label: "TypeScript", color: "from-blue-500 to-sky-400", x: "0%", y: "-50%", delay: 0.2 },
+  { label: "Java", color: "from-orange-500 to-red-500", x: "-34%", y: "38%", delay: 0.3 },
+  { label: "Angular", color: "from-red-600 to-red-500", x: "34%", y: "38%", delay: 0.4 },
+  { label: "n8n", color: "from-fuchsia-500 to-pink-500", x: "0%", y: "50%", delay: 0.5 },
 ];
 
 export function Hero() {
@@ -157,11 +167,11 @@ export function Hero() {
             className="relative"
           >
             {/* Glow atrás */}
-            <div className="absolute inset-0 -z-10 mx-auto h-[380px] w-[380px] rounded-full bg-gradient-to-br from-brand-blue via-brand-violet to-brand-pink opacity-50 blur-3xl" />
+            <div className="absolute inset-0 -z-10 mx-auto h-[280px] w-[280px] rounded-full bg-gradient-to-br from-brand-blue via-brand-violet to-brand-pink opacity-50 blur-3xl sm:h-[380px] sm:w-[380px]" />
 
             {/* Anéis decorativos estáticos */}
-            <div className="absolute inset-0 -z-10 mx-auto h-[460px] w-[460px] rounded-full border border-white/10 [mask-image:linear-gradient(transparent,black,transparent)]" />
-            <div className="absolute inset-0 -z-10 mx-auto h-[540px] w-[540px] rounded-full border border-white/5 [mask-image:radial-gradient(black,transparent_70%)]" />
+            <div className="absolute inset-0 -z-10 mx-auto h-[340px] w-[340px] rounded-full border border-white/10 sm:h-[460px] sm:w-[460px] [mask-image:linear-gradient(transparent,black,transparent)]" />
+            <div className="absolute inset-0 -z-10 mx-auto h-[400px] w-[400px] rounded-full border border-white/5 sm:h-[540px] sm:w-[540px] [mask-image:radial-gradient(black,transparent_70%)]" />
 
             {/* Foto flutuando */}
             <motion.div
@@ -175,14 +185,14 @@ export function Hero() {
                 width={440}
                 height={520}
                 priority
-                className="relative z-10 select-none drop-shadow-[0_25px_40px_rgba(139,92,246,0.4)]"
+                className="relative z-10 mx-auto h-auto w-[280px] select-none drop-shadow-[0_25px_40px_rgba(139,92,246,0.4)] sm:w-[380px] md:w-[440px]"
               />
             </motion.div>
 
-            {/* Badges flutuantes (anim CSS mais leve) */}
-            {floatingBadges.map((b, i) => (
+            {/* Badges flutuantes — versão mobile (compacta) */}
+            {mobileBadges.map((b, i) => (
               <motion.div
-                key={b.label}
+                key={`m-${b.label}`}
                 initial={{ opacity: 0, scale: 0 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{
@@ -198,7 +208,40 @@ export function Hero() {
                   animationDelay: `${i * 0.3}s`,
                   willChange: "transform",
                 }}
-                className="absolute z-20"
+                className="absolute z-20 md:hidden"
+              >
+                <div
+                  className={`rounded-full bg-gradient-to-r ${b.color} p-[1px] shadow-lg`}
+                >
+                  <div className="rounded-full bg-base-900/90 px-2.5 py-0.5 backdrop-blur-md">
+                    <span className="font-mono text-[10px] font-medium text-white">
+                      {b.label}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+
+            {/* Badges flutuantes — versão desktop (completa) */}
+            {desktopBadges.map((b, i) => (
+              <motion.div
+                key={`d-${b.label}`}
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{
+                  delay: 1 + b.delay,
+                  duration: 0.5,
+                  type: "spring",
+                }}
+                style={{
+                  top: `calc(50% + ${b.y})`,
+                  left: `calc(50% + ${b.x})`,
+                  transform: "translate(-50%, -50%)",
+                  animation: `float ${5 + (i % 3)}s ease-in-out infinite`,
+                  animationDelay: `${i * 0.3}s`,
+                  willChange: "transform",
+                }}
+                className="absolute z-20 hidden md:block"
               >
                 <div
                   className={`rounded-full bg-gradient-to-r ${b.color} p-[1px] shadow-lg`}
